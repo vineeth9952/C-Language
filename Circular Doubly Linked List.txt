@@ -1,0 +1,219 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+	int data;
+	struct Node *next;
+	struct Node *prev;
+};
+struct Node *Head = NULL;
+struct Node *Last = NULL;
+void Insert_at_End(int data)
+{
+	struct Node *temp,*newnode;
+	temp = Head;
+	
+	newnode = (struct Node *)malloc(sizeof(struct Node));
+	newnode->data = data;
+	newnode->next = NULL;
+	newnode->prev = NULL;
+	
+	if(Head == NULL)
+	{
+		Head = newnode;
+		Last = Head ;
+	}
+	else
+	{
+		newnode->prev = Last;
+		Last->next = newnode;
+		Last = newnode;
+		newnode->next = Head ;
+	}
+	Head->prev = Last;
+	Last->next = Head;
+}
+void Insert_at_Begin(int data)
+{
+    struct Node *temp,*newnode;
+	temp = Head;
+	
+	newnode = (struct Node *)malloc(sizeof(struct Node));
+	newnode->data = data;
+	newnode->next = NULL;
+	newnode->prev = NULL;
+	
+	if(Head == NULL)
+	{
+		Head = newnode;
+		Last = newnode;
+	}
+	else
+	{
+		Head->prev = newnode;
+		newnode->next = Head;
+		Head = newnode;
+	}
+	Head->prev = Last ;
+	Last->next = Head;
+}
+void Insert_at_Position(int data,int pos)
+{
+	struct Node *temp,*newnode;
+	temp = Head;
+	
+	newnode = (struct Node *)malloc(sizeof(struct Node));
+	newnode->data = data;
+	newnode->next = NULL;
+	newnode->prev = NULL;
+	pos = pos-2;
+	
+		while(pos-->0)
+		{
+			temp = temp->next;
+		}
+		
+		newnode->next=temp->next;
+		temp->next = newnode;
+		newnode->prev = temp;
+		newnode->next->prev = newnode;
+	
+}
+void Deletion_at_End()
+{
+	if(Head == NULL)
+	{
+		printf("No elements");
+		return ;
+	}
+	else
+	{
+		Last->prev->next = Head ;
+		Last = Last->prev ;
+		Head->prev = Last ;
+	}
+}
+void Deletion_at_Begin()
+{
+	if(Head == NULL)
+	{
+	    printf("NO elements are Present");
+		return;
+    }
+	else
+	{
+		Head = Head->next;
+		Head->prev  = Last;
+		Last->next = Head;
+	}
+}
+void Deletion_at_Position(int pos)
+{
+	struct Node *temp;
+	temp = Head;
+	pos = pos-2;
+	
+	if (pos==-1)
+	{
+	    Head = Head->next;
+	    return ;
+	}
+	while(pos-->0)
+	{
+	    temp = temp->next;
+	}
+	
+	temp->next->next->prev = temp;
+	temp->next = temp->next->next;
+	
+}
+void display()
+{
+    struct Node *temp ;
+    temp = Head;
+	while( temp->next != Head)
+	{
+		printf("%d==>",temp->data);
+		temp = temp->next;
+	}
+	printf("%d\n",temp->data);
+}
+int main()
+{
+    printf("Enter 1 for Insertion at End\n");
+    printf("Enter 2 for Insertion at Begining\n");
+    printf("Enter 3 for Insertion at Position\n");
+    printf("Enter 4 for Deletion at End\n");
+    printf("Enter 5 for Deletion at Begining\n");
+    printf("Enter 6 for Deletion at Position\n");
+    printf("Enter 7 for Display the Linked List\n");
+    printf("Enter -1 for Ending the Program\n");
+    
+	int ip;
+	do
+	{
+	    printf("\nEnter the Input :- ");
+	    scanf("%d",&ip);
+	    switch(ip)
+	    {
+	        case 1: 
+	        {
+	            printf("Enter value to be Inserted:- ");
+	            int data;
+	            scanf("%d",&data);
+	            Insert_at_End(data);
+	            break;
+	        }
+	        case 2: 
+	        {
+	            printf("Enter value to be Inserted:- ");
+	            int data;
+	            scanf("%d",&data);
+	            Insert_at_Begin(data);
+	            break;
+	        }
+	        case 3: 
+	        {
+	            printf("Enter Position and value to be Inserted:- ");
+	            int pos,data;
+	            scanf("%d%d",&pos,&data);
+	            Insert_at_Position(pos,data);
+	            break;
+	        }
+	        case 4: 
+	        {
+	            Deletion_at_End();
+	            printf("Value Deleted at End");
+	            break;
+	        }
+	        case 5: 
+	        {
+	            Deletion_at_Begin();
+	            printf("Value Deleted at Begining");
+	            break;
+	        }
+	        case 6: 
+	        {
+	            printf("Enter Position to be Deleted:- ");
+	            int pos;
+	            scanf("%d",&pos);
+	            Deletion_at_Position(pos);
+	            printf("Value Deleted at postion %d",pos);
+	            break;
+	        }
+	        case 7: 
+	        {
+	            printf("Linked list :- ");
+	            Display();
+	            break;
+	        }
+	        default:
+	        {
+	            printf("Invalid Input");
+	        }
+	        
+	    }
+	}while(ip>0);
+	
+	return 0;
+}
