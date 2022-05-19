@@ -1,5 +1,3 @@
-Singly Linked List
-
 #include<stdio.h>
 #include<stdlib.h>
 struct Node
@@ -43,7 +41,7 @@ void Insert_at_Begin(int data)
 		Head = newnode;
 	}
 }
-void Insert_at_Position(int data,int pos)
+void Insert_at_Position(int pos,int data)
 {
 	struct Node *temp,*newnode;
 	temp = Head;
@@ -111,7 +109,7 @@ void Deletion_at_Position(int pos)
 	temp->next = temp->next->next;
 	
 }
-void display()
+void Display()
 {
     struct Node *temp ;
     temp = Head;
@@ -123,18 +121,80 @@ void display()
 }
 int main()
 {
-	int data;
+    printf("Enter 1 for Insertion at End\n");
+    printf("Enter 2 for Insertion at Begining\n");
+    printf("Enter 3 for Insertion at Position\n");
+    printf("Enter 4 for Deletion at End\n");
+    printf("Enter 5 for Deletion at Begining\n");
+    printf("Enter 6 for Deletion at Position\n");
+    printf("Enter 7 for Display the Linked List\n");
+    printf("Enter -1 for Ending the Program\n");
+    
+	int ip;
 	do
 	{
-		scanf("%d",&data);
-		if(data>0)
-		    Insert_at_Begin(data);
-	}while(data>0);
+	    printf("\nEnter the Input :- ");
+	    scanf("%d",&ip);
+	    switch(ip)
+	    {
+	        case 1: 
+	        {
+	            printf("Enter value to be Inserted:- ");
+	            int data;
+	            scanf("%d",&data);
+	            Insert_at_End(data);
+	            break;
+	        }
+	        case 2: 
+	        {
+	            printf("Enter value to be Inserted:- ");
+	            int data;
+	            scanf("%d",&data);
+	            Insert_at_Begin(data);
+	            break;
+	        }
+	        case 3: 
+	        {
+	            printf("Enter Position and value to be Inserted:- ");
+	            int pos,data;
+	            scanf("%d%d",&pos,&data);
+	            Insert_at_Position(pos,data);
+	            break;
+	        }
+	        case 4: 
+	        {
+	            Deletion_at_End();
+	            printf("Value Deleted at End");
+	            break;
+	        }
+	        case 5: 
+	        {
+	            Deletion_at_Begin();
+	            printf("Value Deleted at Begining");
+	            break;
+	        }
+	        case 6: 
+	        {
+	            printf("Enter Position to be Deleted:- ");
+	            int pos;
+	            scanf("%d",&pos);
+	            Deletion_at_Position(pos);
+	            printf("Value Deleted at postion %d",pos);
+	            break;
+	        }
+	        case 7: 
+	        {
+	            printf("Linked list :- ");
+	            Display();
+	            break;
+	        }
+	        default:
+	        {
+	            printf("Invalid Input");
+	        }
+	        
+	    }
+	}while(ip>0);
 	
-	Deletion_at_Position(1);
-	
-	display();
-	
-	printf("\n");
-		return 0;
+	return 0;
 }
